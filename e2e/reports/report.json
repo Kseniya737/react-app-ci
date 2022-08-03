@@ -10,13 +10,24 @@
         "name": "As a user I expect to be able to see contacts",
         "steps": [
           {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 4634243173
+            }
+          },
+          {
             "arguments": [],
             "keyword": "Given ",
             "line": 7,
             "name": "I am on the \"home\" page",
+            "match": {
+              "location": "src/step-definitions/navigation.ts:5"
+            },
             "result": {
-              "status": "undefined",
-              "duration": 0
+              "status": "passed",
+              "duration": 591830208
             }
           },
           {
@@ -24,9 +35,12 @@
             "keyword": "Then ",
             "line": 8,
             "name": "the \"contacts header\" should contain the text \"Contacts\"",
+            "match": {
+              "location": "src/step-definitions/assertions/verify-element-visibility.ts:4"
+            },
             "result": {
-              "status": "undefined",
-              "duration": 0
+              "status": "passed",
+              "duration": 39540398
             }
           },
           {
@@ -34,9 +48,20 @@
             "keyword": "And ",
             "line": 9,
             "name": "the \"header logo\" should be displayed",
+            "match": {
+              "location": "src/step-definitions/assertions/verify-element-visibility.ts:17"
+            },
             "result": {
-              "status": "undefined",
-              "duration": 0
+              "status": "passed",
+              "duration": 16743291
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 56535819
             }
           }
         ],
