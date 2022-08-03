@@ -1,28 +1,44 @@
-import {Then} from '@cucumber/cucumber'
+import { Then } from '@cucumber/cucumber'
 import { expect } from '@playwright/test'
+import { ElementKey } from '../../env/global'
+import { getElementLocator } from '../../support/web-element-helper'
+import { ScenarioWorld } from '../setup/world'
+import { waitFor } from '../../support/wait-for-behavior';
 
 Then(
     /^the "([^"]*)" should contain the text "(.*)"$/,
-    async function(elementKey: string, expectedElementText: string) {
+    async function(this: ScenarioWorld, elementKey: ElementKey, expectedElementText: string) {
         const {
             screen: { page },
+            globalVariables,
+            globalConfig,
         } = this;
 
         console.log(`the ${elementKey} should contain the text ${expectedElementText}`)
-        const content = await page.textContent("[data-id='contacts']")
+        const elementIdentifier = getElementLocator(page, elementKey, globalVariables, globalConfig);
+        const content = await page.textContent(elementIdentifier)
         expect(content).toBe(expectedElementText)
     }
 )
 
 Then(
     /^the "([^"]*)" should be displayed$/,
-    async function(elementKey: string){
+    async function(this: ScenarioWorld, elementKey: ElementKey) {
         const {
             screen: { page },
+            globalVariables,
+            globalConfig,
         } = this;
 
         console.log(`the ${elementKey} should be displayed`)
-        const locator = page.locator("[data-id='header-logo']")
+
+        const elementIdentifier = getElementLocator(page, elementKey, globalVariables, globalConfig);
+        const locator = page.locator(elementIdentifier);
         await expect(locator).toBeVisible();
+
+        await waitFor(async () => {
+            const isElementVisible = (await page.$(elementIdentifier)) != null;
+            return isElementVisible;
+        });
     }
 )
