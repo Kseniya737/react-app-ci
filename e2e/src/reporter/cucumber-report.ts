@@ -9,7 +9,7 @@ const options: Options = {
     jsonFile: env('JSON_REPORT_FILE'),
     output: env('HTML_REPORT_FILE'),
     screenshotsDirectory: env('SCREENSHOT_PATH'),
-    storeScreenshots: false,
+    storeScreenshots: true,
     reportSuiteAsScenarios: true,
     launchReport: false,
 }

@@ -17,7 +17,7 @@ var options = {
   jsonFile: (0, _parseEnv.env)('JSON_REPORT_FILE'),
   output: (0, _parseEnv.env)('HTML_REPORT_FILE'),
   screenshotsDirectory: (0, _parseEnv.env)('SCREENSHOT_PATH'),
-  storeScreenshots: false,
+  storeScreenshots: true,
   reportSuiteAsScenarios: true,
   launchReport: false
 };
