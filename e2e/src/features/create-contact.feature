@@ -5,7 +5,7 @@ Feature: As a user I expect to be able to create contacts
     Given I am on the "home" page
     And I click the "create" button
     When I am directed to the "create contact" page
-    And the "create contact header" should contain the text "Create Contact"
+    And the "create contact header" should equal the text "Create Contact"
     Then I fill in the "name" input with "Terry Barks"
     And I select the "Male" option from the "gender"
     And I fill in the "phone" input with "939-555-0113"
@@ -17,10 +17,10 @@ Feature: As a user I expect to be able to create contacts
     And I fill in the "search" input with "Terry Barks"
     And the "contact" should be displayed
     And the "full name label" should contain the text "Name:"
-    And the "name" should contain the text "Terry Barks"
+    And the "name" should equal the text "Terry Barks"
     And the "gender label" should contain the text "Gender:"
-    And the "gender" should contain the text "Male"
+    And the "gender" should equal the text "Male"
     And the "address label" should contain the text "Address:"
-    And the "address" should contain the text "742 Puma Terrace"
+    And the "address" should equal the text "742 Puma Terrace, Springfield"
     And the "edit" should be displayed
     And the "delete" should be displayed

@@ -58,3 +58,56 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return _ref.apply(this, arguments);
   };
 }());
+(0, _cucumber.Then)(/^the "([^"]*)" should equal the text "(.*)"$/, /*#__PURE__*/function () {
+  var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(elementKey, expectedElementText) {
+    var page, globalConfig, elementIdentifier;
+    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            page = this.screen.page, globalConfig = this.globalConfig;
+            console.log("the ".concat(elementKey, " should equal the text ").concat(expectedElementText));
+            elementIdentifier = (0, _webElementHelper.getElementLocator)(page, elementKey, globalConfig);
+
+            if (elementIdentifier) {
+              _context4.next = 5;
+              break;
+            }
+
+            throw Error("element ".concat(elementKey, " not found"));
+
+          case 5:
+            _context4.next = 7;
+            return (0, _waitForBehavior.waitFor)( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+              var elementText;
+              return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+                while (1) {
+                  switch (_context3.prev = _context3.next) {
+                    case 0:
+                      _context3.next = 2;
+                      return page.textContent(elementIdentifier);
+
+                    case 2:
+                      elementText = _context3.sent;
+                      return _context3.abrupt("return", elementText === expectedElementText);
+
+                    case 4:
+                    case "end":
+                      return _context3.stop();
+                  }
+                }
+              }, _callee3);
+            })));
+
+          case 7:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4, this);
+  }));
+
+  return function (_x4, _x5, _x6) {
+    return _ref3.apply(this, arguments);
+  };
+}());

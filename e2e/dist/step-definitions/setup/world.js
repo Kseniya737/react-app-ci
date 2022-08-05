@@ -71,7 +71,8 @@ var ScenarioWorld = /*#__PURE__*/function (_World) {
               _context.next = 5;
               return browserType.launch({
                 headless: process.env.HEADLESS !== 'false',
-                args: ['--disable-web-security', '--disable-features=IsolateOrigins, site-per-process']
+                args: ['--disable-web-security', '--disable-features=IsolateOrigins, site-per-process'],
+                devtools: process.env.DEVTOOLS !== 'false'
               });
 
             case 5:
