@@ -1,4 +1,5 @@
 /node_modules
 /e2e/node_modules
 .idea
-/e2e/reports/
+/e2e/reports
+/e2e/dist
