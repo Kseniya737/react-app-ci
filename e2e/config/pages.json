@@ -6,5 +6,7 @@
   "create contact": {
     "route": "/tasks/create",
     "regex": "^/tasks/create"
-  }
+  },
+  "playground": "/playground",
+  "regex": "^/playground"
 }

@@ -38,7 +38,7 @@ var worldParameters = {
   pagesConfig: pagesConfig,
   pageElementMappings: pageElementMappings
 };
-var common = "./src/features/**/*.feature                 --require-module ts-node/register                 --require ./src/step-definitions/**/**/*.ts                 -f json:./reports/report.json                 --world-parameters ".concat(JSON.stringify(worldParameters), "                 --format progress-bar");
+var common = "./src/features/**/*.feature                 --require-module ts-node/register                 --require ./src/step-definitions/**/**/*.ts                 -f json:./reports/report.json                 --world-parameters ".concat(JSON.stringify(worldParameters), "                 --format progress-bar                 --parallel ").concat((0, _parseEnv.env)('PARALLEL'), "                 --retry ").concat((0, _parseEnv.env)('RETRY'));
 var dev = "".concat(common, " --tags '@dev'");
 exports.dev = dev;
 var smoke = "".concat(common, " --tags '@smoke'");
