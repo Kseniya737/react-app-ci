@@ -6,14 +6,14 @@ import { ElementKey } from "../env/global";
 import { inputValueOnPage } from "../support/html-behavior";
 
 Then(
-    /^I fill in the "([^"]*)" input on the "([0-9]+th|[0-9]+st|[0-9]+nd|[0-9]+rd)" tab with "([^"]*)"$/,
+    /^I fill in the "([^"]*)" input on the "([0-9]+th|[0-9]+st|[0-9]+nd|[0-9]+rd)" (?:tab|window) with "([^"]*)"$/,
     async function(this: ScenarioWorld, elementKey: ElementKey, elementPosition: string, inputValue: string){
         const {
             screen: { page, context },
             globalConfig,
         } = this;
 
-        console.log(`I fill in the ${elementKey} input on the ${elementPosition} tab with ${inputValue}`);
+        console.log(`I fill in the ${elementKey} input on the ${elementPosition} window|tab with ${inputValue}`);
 
         const pageIndex = Number(elementPosition.match(/\d/g)?.join('')) - 1;
 
