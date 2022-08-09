@@ -8,7 +8,9 @@
     "cucumber-compile": "yarn run transpile && cucumber-js",
     "precucumber": "rimraf reports && mkdir reports && echo {} > reports/reports.json",
     "postcucumber": "COMMON_CONFIG_FILE=env/common.env ts-node ./src/reporter/cucumber-report.ts",
-    "cucumber": "COMMON_CONFIG_FILE=env/common.env yarn cucumber-compile"
+    "cucumber": "COMMON_CONFIG_FILE=env/common.env yarn cucumber-compile",
+    "postcucumber_windows": "ts-node ./src/reporter/cucumber-report.ts",
+    "cucumber_windows": "yarn cucumber-compile"
   },
   "author": "",
   "license": "ISC",
