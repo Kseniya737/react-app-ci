@@ -1,4 +1,4 @@
-Feature: as a user I can interact with checkboxes
+Feature: As a user I can interact with checkboxes
 
 @smoke
 @regression
