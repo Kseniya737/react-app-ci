@@ -1,6 +1,5 @@
 Feature: as a user I can interact with switches
 
-  @dev
   @smoke
   @regression
   Scenario: as a user I can interact and assert on switches
