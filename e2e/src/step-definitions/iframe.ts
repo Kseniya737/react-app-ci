@@ -17,9 +17,10 @@ Then(
 
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig);
         const iFrameIdentifier = getElementLocator(page, iframeName, globalConfig);
-        const elementIframe = await getIframeElement(page, iFrameIdentifier);
 
         await waitFor(async() => {
+            const elementIframe = await getIframeElement(page, iFrameIdentifier);
+
             const result = await page.waitForSelector(iFrameIdentifier, {
                 state: 'visible'
             })
