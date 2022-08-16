@@ -1,9 +1,10 @@
 import { Then } from '@cucumber/cucumber';
 import { ScenarioWorld } from '../setup/world';
-import { waitFor } from "../../support/wait-for-behavior";
+import {waitFor, waitForSelectorOnPage} from "../../support/wait-for-behavior";
 import {ElementKey} from "../../env/global";
 import {getElementLocator} from "../../support/web-element-helper";
 import {logger} from "../../logger";
+import {getElementOnPage, getElementTextWithinPage, getTitleWithinPage} from "../../support/html-behavior";
 
 Then(
     /^the "([0-9]+th|[0-9]+st|[0-9]+nd|[0-9]+rd)" (?:tab|window) should( not)? contain the title "(.*)"$/,
@@ -25,7 +26,7 @@ Then(
 
         await waitFor(async () => {
             let pages = context.pages();
-            const tabTitle = await pages[pageIndex].title()
+            const tabTitle = await getTitleWithinPage(page, pages, pageIndex)
             return tabTitle?.includes(expectedTitle) === !negate;
         });
     }
@@ -46,7 +47,7 @@ Then(
 
         await waitFor(async() => {
             let pages = context.pages();
-            const isElementVisible = (await pages[pageIndex].$(elementIdentifier)) !== null;
+            const isElementVisible = await getElementOnPage(page, elementIdentifier, pages, pageIndex) !== null;
             return isElementVisible === !negate;
         });
     }
@@ -67,9 +68,16 @@ Then(
 
         await waitFor(async () => {
             let pages = context.pages();
-            const elementText = await pages[pageIndex].textContent(elementIdentifier);
-            return elementText?.includes(expectedElementText) === !negate;
-        })
+
+            const elementStable = await waitForSelectorOnPage(page, elementIdentifier, pages, pageIndex)
+
+            if(elementStable){
+                const elementText = await getElementTextWithinPage(page, elementIdentifier, pages, pageIndex);
+                return elementText?.includes(expectedElementText) === !negate;
+            } else {
+                return elementStable;
+            }
+        });
     }
 )
 
@@ -88,8 +96,15 @@ Then(
 
         await waitFor(async () => {
             let pages = context.pages();
-            const elementText = await pages[pageIndex].textContent(elementIdentifier);
-            return (elementText === expectedElementText) === !negate;
-        })
+
+            const elementStable = await waitForSelectorOnPage(page, elementIdentifier, pages, pageIndex)
+
+            if(elementStable){
+                const elementText = await getElementTextWithinPage(page, elementIdentifier, pages, pageIndex);
+                return (elementText === expectedElementText) === !negate;
+            } else {
+                return elementStable;
+            }
+        });
     }
 )

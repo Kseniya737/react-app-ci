@@ -2,8 +2,9 @@ import {DataTable, When, Then} from '@cucumber/cucumber'
 import { ElementKey } from '../../env/global';
 import { ScenarioWorld } from '../setup/world';
 import {getElementLocator} from "../../support/web-element-helper";
-import { waitFor } from '../../support/wait-for-behavior';
+import {waitFor, waitForSelector} from '../../support/wait-for-behavior';
 import {logger} from "../../logger";
+import {getTableData} from "../../support/html-behavior";
 
 When(
     /^the "([^"]*)" table should( not)? equal the following:$/,
@@ -19,14 +20,14 @@ When(
 
         await waitFor(async() => {
 
-            const dataBefore = await page.$$eval(elementIdentifier+" tbody tr",(rows) => {
-                return rows.map(row => {
-                    const cells = row.querySelectorAll('td')
-                    return Array.from(cells).map(cell => cell.textContent)
-                });
-            });
+            const elementStable = await waitForSelector(page, elementIdentifier);
 
-            return JSON.stringify(dataBefore) === JSON.stringify(dataTable.raw()) === !negate
+            if (elementStable){
+                const tableData = await getTableData(page, elementIdentifier);
+                return tableData === JSON.stringify(dataTable.raw()) === !negate
+            } else {
+                return elementStable
+            }
         });
     }
 )

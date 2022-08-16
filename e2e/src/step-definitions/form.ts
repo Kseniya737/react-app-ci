@@ -1,7 +1,7 @@
 import { Then } from '@cucumber/cucumber';
 import {
-    selectValue,
-    inputValue,
+    selectElementValue,
+    inputElementValue,
 } from '../support/html-behavior';
 import {waitFor, waitForSelector} from '../support/wait-for-behavior';
 import { getElementLocator } from '../support/web-element-helper';
@@ -26,7 +26,7 @@ Then (
 
             if (elementStable) {
                 const parsedInput = parseInput(input, globalConfig);
-                await inputValue(page, elementIdentifier, parsedInput);
+                await inputElementValue(page, elementIdentifier, parsedInput);
             }
             return elementStable;
         });
@@ -49,7 +49,7 @@ Then(
             const elementStable = await waitForSelector(page, elementIdentifier)
 
             if (elementStable) {
-                await selectValue(page, elementIdentifier, option);
+                await selectElementValue(page, elementIdentifier, option);
             }
             return elementStable;
         });
