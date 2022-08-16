@@ -4,6 +4,7 @@ import { ScenarioWorld } from '../setup/world';
 import { getElementLocator } from "../../support/web-element-helper";
 import { waitFor } from '../../support/wait-for-behavior';
 import { getValue, getAttributeText } from "../../support/html-behavior";
+import {logger} from "../../logger";
 
 Then(
     /^the "([^"]*)" should( not)? contain the text "(.*)"$/,
@@ -13,12 +14,14 @@ Then(
             globalConfig,
         } = this;
 
-        console.log(`the ${elementKey} should ${negate?'not':''} contain the text ${expectedElementText}`)
+        logger.log(`the ${elementKey} should ${negate?'not':''} contain the text ${expectedElementText}`)
 
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
         await waitFor(async () => {
             const elementText = await page.textContent(elementIdentifier)
+            logger.debug("elementText ", elementText);
+            logger.debug("expectedElementText ", expectedElementText);
             return elementText?.includes(expectedElementText) === !negate;
         });
 
@@ -33,7 +36,7 @@ Then(
             screen: { page },
             globalConfig,
         } = this
-        console.log(`the ${elementKey} should ${negate?'not':''} equal the text ${expectedElementText}`)
+        logger.log(`the ${elementKey} should ${negate?'not':''} equal the text ${expectedElementText}`)
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
         if(!elementIdentifier){
@@ -55,7 +58,7 @@ Then(
             globalConfig,
         } = this;
 
-        console.log(`the ${elementKey} should ${negate?'not':''} contain the value ${elementValue}`);
+        logger.log(`the ${elementKey} should ${negate?'not':''} contain the value ${elementValue}`);
 
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig);
 
@@ -74,7 +77,7 @@ Then(
             globalConfig,
         } = this;
 
-        console.log(`the ${elementKey} should ${negate?'not':''} equal the value ${elementValue}`);
+        logger.log(`the ${elementKey} should ${negate?'not':''} equal the value ${elementValue}`);
 
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig);
 
@@ -93,7 +96,7 @@ Then(
             globalConfig,
         } = this;
 
-        console.log(`the ${elementKey} should ${negate?'not':''} be enabled`);
+        logger.log(`the ${elementKey} should ${negate?'not':''} be enabled`);
 
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig);
 
@@ -113,7 +116,7 @@ Then(
             globalConfig,
         } = this;
 
-        console.log(`the ${elementPosition} ${elementKey} button|link should ${negate?'not':''} contain the text ${expectedElementText}`);
+        logger.log(`the ${elementPosition} ${elementKey} button|link should ${negate?'not':''} contain the text ${expectedElementText}`);
 
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig);
         const index = Number(elementPosition.match(/\d/g)?.join('')) - 1;
@@ -133,7 +136,7 @@ Then(
             globalConfig,
         } = this;
 
-        console.log(`the ${elementKey} ${attribute} attribute should ${negate?'not ':''}contain the text ${expectedElementText}`);
+        logger.log(`the ${elementKey} ${attribute} attribute should ${negate?'not ':''}contain the text ${expectedElementText}`);
 
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig);
 

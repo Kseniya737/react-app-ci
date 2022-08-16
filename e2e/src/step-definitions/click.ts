@@ -4,9 +4,10 @@ import {
     clickElementAtIndex
 } from '../support/html-behavior';
 import { ScenarioWorld } from './setup/world';
-import { waitFor } from '../support/wait-for-behavior';
+import {waitFor, waitForSelector} from '../support/wait-for-behavior';
 import { getElementLocator } from '../support/web-element-helper';
 import { ElementKey } from '../env/global';
+import {logger} from "../logger";
 
 When(
     /^I click the "([^"]*)" (?:button|link)$/,
@@ -16,18 +17,17 @@ When(
             globalConfig,
         } = this;
 
-        console.log(`I click the ${elementKey} (?:button|link|icon|element|radio button)`);
+        logger.log(`I click the ${elementKey} (?:button|link|icon|element|radio button)`);
 
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig);
 
         await waitFor(async () => {
-            const result = await page.waitForSelector(elementIdentifier, {
-                state: 'visible',
-            });
-            if (result) {
+            const elementStable = await waitForSelector(page, elementIdentifier)
+
+            if (elementStable) {
                 await clickElement(page, elementIdentifier);
             }
-            return result;
+            return elementStable;
         });
     }
 );
@@ -40,19 +40,17 @@ When(
             globalConfig,
         } = this;
 
-        console.log(`I click the ${elementPosition} ${elementKey} button|link`);
+        logger.log(`I click the ${elementPosition} ${elementKey} button|link`);
 
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig);
         const pageIndex = Number(elementPosition.match(/\d/g)?.join('')) - 1;
 
         await waitFor(async() => {
-            const result = await page.waitForSelector(elementIdentifier, {
-                state: "visible"
-            });
-            if(result){
+            const elementStable = await waitForSelector(page, elementIdentifier)
+            if(elementStable){
                 await clickElementAtIndex(page, elementIdentifier, pageIndex)
             }
-            return result;
+            return elementStable;
         })
     }
 )

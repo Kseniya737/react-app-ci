@@ -1,8 +1,9 @@
 import { Then } from '@cucumber/cucumber'
-import { waitFor } from "../../support/wait-for-behavior";
+import {waitFor, waitForSelector} from "../../support/wait-for-behavior";
 import { ScenarioWorld } from "../setup/world";
 import { getElementLocator } from "../../support/web-element-helper";
 import { ElementKey } from '../../env/global'
+import {logger} from "../../logger";
 
 Then(
     /^the "([^"]*)" (?:check box|radio button|switch) should( not)? be checked$/,
@@ -12,12 +13,17 @@ Then(
             globalConfig,
         } = this
 
-        console.log(`the ${elementKey} check box|radio button|switch should ${negate?'not ':''} be checked`)
+        logger.log(`the ${elementKey} check box|radio button|switch should ${negate?'not ':''} be checked`)
 
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
         await waitFor(async() => {
-            const isElementChecked = await page.isChecked(elementIdentifier)
-            return isElementChecked === !negate;
+            const elementStable = await waitForSelector(page, elementIdentifier)
+            if(elementStable){
+                const isElementChecked = await page.isChecked(elementIdentifier)
+                return isElementChecked === !negate;
+            } else {
+                return elementStable
+            }
         })
     }
 )
