@@ -1,20 +1,20 @@
-import { Then } from '@cucumber/cucumber';
+import {Then} from '@cucumber/cucumber';
 import {
     selectElementValue,
     inputElementValue,
 } from '../support/html-behavior';
 import {waitFor, waitForSelector} from '../support/wait-for-behavior';
-import { getElementLocator } from '../support/web-element-helper';
-import { ScenarioWorld } from './setup/world';
-import { ElementKey } from '../env/global';
+import {getElementLocator} from '../support/web-element-helper';
+import {ScenarioWorld} from './setup/world';
+import {ElementKey} from '../env/global';
 import {parseInput} from "../support/input-helper";
 import {logger} from "../logger";
 
-Then (
+Then(
     /^I fill in the "([^"]*)" input with "([^"]*)"$/,
     async function (this: ScenarioWorld, elementKey: ElementKey, input: string) {
         const {
-            screen: { page },
+            screen: {page},
             globalConfig,
         } = this;
 
@@ -29,7 +29,7 @@ Then (
                 await inputElementValue(page, elementIdentifier, parsedInput);
             }
             return elementStable;
-        });
+        }, globalConfig, {target: elementKey});
     }
 );
 
@@ -37,7 +37,7 @@ Then(
     /^I select the "([^"]*)" option from the "([^"]*)"$/,
     async function (this: ScenarioWorld, option: string, elementKey: ElementKey) {
         const {
-            screen: { page },
+            screen: {page},
             globalConfig,
         } = this;
 
@@ -52,6 +52,6 @@ Then(
                 await selectElementValue(page, elementIdentifier, option);
             }
             return elementStable;
-        });
+        }, globalConfig, {target: elementKey});
     }
 );

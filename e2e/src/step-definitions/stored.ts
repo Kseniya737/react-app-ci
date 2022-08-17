@@ -1,15 +1,15 @@
-import { Then } from '@cucumber/cucumber';
+import {Then} from '@cucumber/cucumber';
 import {waitFor, waitForSelector} from '../support/wait-for-behavior';
-import { getElementLocator } from "../support/web-element-helper";
-import { ScenarioWorld } from "./setup/world";
-import { ElementKey } from "../env/global";
+import {getElementLocator} from "../support/web-element-helper";
+import {ScenarioWorld} from "./setup/world";
+import {ElementKey} from "../env/global";
 import {logger} from "../logger";
 
 Then(
     /^I retrieve the "([^"]*)" text and store it as "([^"]*)" in global variables$/,
-    async function(this: ScenarioWorld, elementKey: ElementKey, variableKey: string){
+    async function (this: ScenarioWorld, elementKey: ElementKey, variableKey: string) {
         const {
-            screen: { page },
+            screen: {page},
             globalConfig,
             globalVariables
         } = this
@@ -23,12 +23,12 @@ Then(
 
             if (elementStable) {
                 const elementText = await page.textContent(elementIdentifier);
-                if (elementText != null){
+                if (elementText != null) {
                     globalVariables[variableKey] = elementText
                 }
             }
             return elementStable;
-        });
+        }, globalConfig, {target: elementKey});
     }
 )
 

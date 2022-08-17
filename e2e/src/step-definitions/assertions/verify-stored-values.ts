@@ -28,7 +28,7 @@ Then(
             } else {
                 return elementStable
             }
-        });
+        }, globalConfig, {target: elementKey});
     });
 
 Then(
@@ -55,7 +55,7 @@ Then(
             } else {
                 return elementStable
             }
-        });
+        }, globalConfig, {target: elementKey});
     }
 )
 

@@ -1,16 +1,16 @@
-import { Then } from '@cucumber/cucumber';
+import {Then} from '@cucumber/cucumber';
 import {waitFor, waitForSelector, waitForSelectorOnPage} from '../support/wait-for-behavior';
-import { getElementLocator } from "../support/web-element-helper";
-import { ScenarioWorld } from "./setup/world";
-import { ElementKey } from "../env/global";
-import { inputValueOnPage } from "../support/html-behavior";
+import {getElementLocator} from "../support/web-element-helper";
+import {ScenarioWorld} from "./setup/world";
+import {ElementKey} from "../env/global";
+import {inputValueOnPage} from "../support/html-behavior";
 import {logger} from "../logger";
 
 Then(
     /^I fill in the "([^"]*)" input on the "([0-9]+th|[0-9]+st|[0-9]+nd|[0-9]+rd)" (?:tab|window) with "([^"]*)"$/,
-    async function(this: ScenarioWorld, elementKey: ElementKey, elementPosition: string, inputValue: string){
+    async function (this: ScenarioWorld, elementKey: ElementKey, elementPosition: string, inputValue: string) {
         const {
-            screen: { page, context },
+            screen: {page, context},
             globalConfig,
         } = this;
 
@@ -25,10 +25,10 @@ Then(
 
             const elementStable = await waitForSelectorOnPage(page, elementIdentifier, pages, pageIndex);
 
-            if (elementStable){
+            if (elementStable) {
                 await inputValueOnPage(pages, pageIndex, elementIdentifier, inputValue)
             }
             return elementStable;
-        });
+        }, globalConfig, {target: elementKey});
     }
 )

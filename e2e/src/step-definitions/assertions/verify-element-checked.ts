@@ -1,30 +1,31 @@
-import { Then } from '@cucumber/cucumber'
+import {Then} from '@cucumber/cucumber'
 import {waitFor, waitForSelector} from "../../support/wait-for-behavior";
 import {elementChecked} from "../../support/html-behavior";
-import { ScenarioWorld } from "../setup/world";
-import { getElementLocator } from "../../support/web-element-helper";
-import { ElementKey } from '../../env/global'
+import {ScenarioWorld} from "../setup/world";
+import {getElementLocator} from "../../support/web-element-helper";
+import {ElementKey} from '../../env/global'
 import {logger} from "../../logger";
 
 Then(
     /^the "([^"]*)" (?:check box|radio button|switch) should( not)? be checked$/,
-    async function(this: ScenarioWorld, elementKey: ElementKey, negate: boolean){
+    async function (this: ScenarioWorld, elementKey: ElementKey, negate: boolean) {
         const {
-            screen: { page },
+            screen: {page},
             globalConfig,
         } = this
 
-        logger.log(`the ${elementKey} check box|radio button|switch should ${negate?'not ':''} be checked`)
+        logger.log(`the ${elementKey} check box|radio button|switch should ${negate ? 'not ' : ''} be checked`)
 
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
-        await waitFor(async() => {
-            const elementStable = await waitForSelector(page, elementIdentifier)
-            if(elementStable){
-                const isElementChecked = await elementChecked(page, elementIdentifier);
-                return isElementChecked === !negate;
-            } else {
-                return elementStable
-            }
-        })
+        await waitFor(async () => {
+                const elementStable = await waitForSelector(page, elementIdentifier)
+                if (elementStable) {
+                    const isElementChecked = await elementChecked(page, elementIdentifier);
+                    return isElementChecked === !negate;
+                } else {
+                    return elementStable
+                }
+            },
+            globalConfig, {target: elementKey})
     }
 )

@@ -1,7 +1,7 @@
 import { Then } from '@cucumber/cucumber';
 import { ScenarioWorld } from '../setup/world';
 import {waitFor, waitForSelectorOnPage} from "../../support/wait-for-behavior";
-import {ElementKey} from "../../env/global";
+import {ElementKey, GlobalConfig} from "../../env/global";
 import {getElementLocator} from "../../support/web-element-helper";
 import {logger} from "../../logger";
 import {getElementOnPage, getElementTextWithinPage, getTitleWithinPage} from "../../support/html-behavior";
@@ -10,6 +10,7 @@ Then(
     /^the "([0-9]+th|[0-9]+st|[0-9]+nd|[0-9]+rd)" (?:tab|window) should( not)? contain the title "(.*)"$/,
     async function (
         this: ScenarioWorld,
+        globalConfig: GlobalConfig,
         elementPosition: string,
         negate: boolean,
         expectedTitle: string
@@ -28,7 +29,9 @@ Then(
             let pages = context.pages();
             const tabTitle = await getTitleWithinPage(page, pages, pageIndex)
             return tabTitle?.includes(expectedTitle) === !negate;
-        });
+        },
+            globalConfig,
+            {type: "title"});
     }
 );
 
@@ -49,7 +52,9 @@ Then(
             let pages = context.pages();
             const isElementVisible = await getElementOnPage(page, elementIdentifier, pages, pageIndex) !== null;
             return isElementVisible === !negate;
-        });
+        },
+            globalConfig,
+            {target: elementKey});
     }
 )
 
@@ -77,7 +82,9 @@ Then(
             } else {
                 return elementStable;
             }
-        });
+        },
+            globalConfig,
+            {target: elementKey});
     }
 )
 
@@ -105,6 +112,8 @@ Then(
             } else {
                 return elementStable;
             }
-        });
+        },
+            globalConfig,
+            {target: elementKey});
     }
 )
