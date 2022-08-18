@@ -7,6 +7,12 @@
     "route": "/tasks/create",
     "regex": "^/tasks/create"
   },
-  "playground": "/playground",
-  "regex": "^/playground"
+  "playground": {
+    "route": "/playground",
+    "regex": "^/playground"
+  },
+  "edit contact": {
+    "route": "/edit",
+    "regex": "^/tasks/\\d+/edit"
+  }
 }

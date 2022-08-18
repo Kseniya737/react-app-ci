@@ -1060,6 +1060,11 @@
   "resolved" "https://registry.npmjs.org/@cucumber/tag-expressions/-/tag-expressions-4.1.0.tgz"
   "version" "4.1.0"
 
+"@faker-js/faker@^7.4.0":
+  "integrity" "sha512-xDd3Tvkt2jgkx1LkuwwxpNBy/Oe+LkZBTwkgEFTiWpVSZgQ5sc/LenbHKRHbFl0dq/KFeeq/szyyPtpJRKY0fg=="
+  "resolved" "https://registry.npmjs.org/@faker-js/faker/-/faker-7.4.0.tgz"
+  "version" "7.4.0"
+
 "@jridgewell/gen-mapping@^0.1.0":
   "integrity" "sha512-sQXCasFk+U8lWYEe66WxRDOE9PjVz4vSM51fTu3Hw+ClTpUSQb718772vH3pyS5pShp6lvQM7SxgIDXXXmOX7w=="
   "resolved" "https://registry.npmjs.org/@jridgewell/gen-mapping/-/gen-mapping-0.1.1.tgz"

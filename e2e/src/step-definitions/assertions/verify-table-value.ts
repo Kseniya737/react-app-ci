@@ -14,7 +14,7 @@ Then(
             globalConfig,
         } = this
 
-        logger.log(`the ${elementKey} table should ${negate?' not':''}equal the following:`)
+        logger.log(`the ${elementKey} table should ${negate?'not ':''}equal the following:`)
 
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
 
