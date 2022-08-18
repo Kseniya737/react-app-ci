@@ -2,7 +2,7 @@ import { Given } from '@cucumber/cucumber'
 import {
     currentPathMatchesPageId,
     navigateToPage,
-    reloadPage
+    reloadPage,
 } from '../support/navigation-behavior';
 import { ScenarioWorld } from './setup/world';
 import { waitFor } from '../support/wait-for-behavior';
@@ -48,20 +48,20 @@ Given(
 
 Given(
     /^I refresh the "([^"]*)" page$/,
-    async function(this: ScenarioWorld, pageId: PageId){
+    async function (this: ScenarioWorld, pageId: PageId) {
         const {
-            screen: { page },
+            screen: {page},
             globalConfig,
         } = this;
 
-        logger.log(`I refresh the ${pageId} page`);
+        logger.log(`I refresh the ${pageId} page`)
 
-        await reloadPage(page);
+        await reloadPage(page)
 
-        await waitFor(async() => currentPathMatchesPageId(page, pageId, globalConfig), globalConfig,{
+        await waitFor(() => currentPathMatchesPageId(page, pageId, globalConfig), globalConfig, {
             target: pageId,
             type: 'page',
-            timeout: 30000
-        });
+            timeout: 30000,
+        })
     }
 )

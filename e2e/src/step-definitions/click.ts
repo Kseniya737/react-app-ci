@@ -1,19 +1,22 @@
-import {When} from '@cucumber/cucumber';
+import { When } from '@cucumber/cucumber';
 import {
     clickElement,
-    clickElementAtIndex
+    clickElementAtIndex,
 } from '../support/html-behavior';
-import {ScenarioWorld} from './setup/world';
-import {waitFor, waitForSelector} from '../support/wait-for-behavior';
-import {getElementLocator} from '../support/web-element-helper';
-import {ElementKey} from '../env/global';
+import { ScenarioWorld } from './setup/world';
+import {
+    waitFor, waitForResult,
+    waitForSelector
+} from '../support/wait-for-behavior';
+import { getElementLocator } from '../support/web-element-helper';
+import { ElementKey } from '../env/global';
 import {logger} from "../logger";
 
 When(
     /^I click the "([^"]*)" (?:button|link)$/,
     async function (this: ScenarioWorld, elementKey: ElementKey) {
         const {
-            screen: {page},
+            screen: { page },
             globalConfig,
         } = this;
 
@@ -22,35 +25,45 @@ When(
         const elementIdentifier = getElementLocator(page, elementKey, globalConfig);
 
         await waitFor(async () => {
-            const elementStable = await waitForSelector(page, elementIdentifier)
+                const elementStable = await waitForSelector(page, elementIdentifier)
 
-            if (elementStable) {
-                await clickElement(page, elementIdentifier);
-            }
-            return elementStable;
-        }, globalConfig, {target: elementKey});
+                if (elementStable) {
+                    await clickElement(page, elementIdentifier);
+                    return waitForResult.PASS
+                }
+
+                return waitForResult.ELEMENT_NOT_AVAILABLE
+            },
+            globalConfig,
+            {target: elementKey});
     }
 );
 
 When(
     /^I click the "([0-9]+th|[0-9]+st|[0-9]+nd|[0-9]+rd)" "([^"]*)" (?:button|link)$/,
-    async function (this: ScenarioWorld, elementPosition: string, elementKey: ElementKey) {
+    async function(this: ScenarioWorld, elementPosition: string, elementKey: ElementKey) {
         const {
-            screen: {page},
+            screen: { page },
             globalConfig,
         } = this;
 
-        logger.log(`I click the ${elementPosition} ${elementKey} button|link`);
+        logger.log(`I click ${elementPosition} ${elementKey} button|link`)
 
-        const elementIdentifier = getElementLocator(page, elementKey, globalConfig);
-        const pageIndex = Number(elementPosition.match(/\d/g)?.join('')) - 1;
+        const elementIdentifier = getElementLocator(page, elementKey, globalConfig)
+
+        const pageIndex = Number(elementPosition.match(/\d/g)?.join('')) -1
 
         await waitFor(async () => {
-            const elementStable = await waitForSelector(page, elementIdentifier)
-            if (elementStable) {
-                await clickElementAtIndex(page, elementIdentifier, pageIndex)
-            }
-            return elementStable;
-        }, globalConfig, {target: elementKey})
+                const elementStable = await waitForSelector(page, elementIdentifier)
+
+                if (elementStable) {
+                    await clickElementAtIndex(page, elementIdentifier, pageIndex)
+                    return waitForResult.PASS
+                }
+
+                return waitForResult.ELEMENT_NOT_AVAILABLE
+            },
+            globalConfig,
+            {target: elementKey});
     }
 )
