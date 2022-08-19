@@ -11,6 +11,7 @@ cd e2e
 
 echo "yarn install e2e"
 yarn install
+npm install
 
 echo "run e2e"
 ./run_tests.sh localhost regression
